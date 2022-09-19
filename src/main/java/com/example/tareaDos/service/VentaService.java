@@ -5,8 +5,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.tareaDos.dao.Todo;
+import com.example.tareaDos.daoImpl.DetalleDaoImpl;
 import com.example.tareaDos.daoImpl.VentaDaoImpl;
 import com.example.tareaDos.entity.Venta;
 
@@ -15,6 +17,8 @@ public class VentaService implements Todo<Venta>{
 	
 	@Autowired
 	private VentaDaoImpl daoImpl;
+	@Autowired
+	private DetalleDaoImpl detailsDaoImpl;
 	
 	@Override
 	public int create(Venta t) {
@@ -29,9 +33,11 @@ public class VentaService implements Todo<Venta>{
 	}
 
 	@Override
+	@Transactional
 	public int delete(int id) {
 		// TODO Auto-generated method stub
-		return 0;
+		detailsDaoImpl.delete(id);
+		return daoImpl.delete(id);
 	}
 
 	@Override

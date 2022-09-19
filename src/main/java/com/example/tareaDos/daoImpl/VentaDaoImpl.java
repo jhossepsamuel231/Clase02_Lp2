@@ -32,7 +32,7 @@ public class VentaDaoImpl implements Todo<Venta>{
 	
 	@Override
 	@Transactional
-	public int create(Venta t) {
+	public int create(Venta t) {	
 		// Permite la accio de obtener el id generado(tiene el metodo especial)
 		NamedParameterJdbcTemplate ejecutar = new NamedParameterJdbcTemplate(dataSource);
 		
@@ -57,8 +57,10 @@ public class VentaDaoImpl implements Todo<Venta>{
 
 	@Override
 	public int delete(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		String queryDeleteSales  = "DELETE FROM venta WHERE idventa = ?";
+		
+		return jdbcTemplate.update(queryDeleteSales, id);		
+
 	}
 
 	@Override

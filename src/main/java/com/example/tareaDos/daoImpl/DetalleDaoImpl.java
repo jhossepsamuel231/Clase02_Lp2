@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -32,17 +33,19 @@ public class DetalleDaoImpl implements Todo<Detalle>{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
 	@Override
 	public int delete(int id) {
 		// TODO Auto-generated method stub
-		return 0;
+		String sql = "DELETE FROM detalle WHERE id_venta=?";
+		return jdbcTemplate.update(sql, id);
 	}
 
 	@Override
 	public Detalle read(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT P.NOMBRE,  D.CANTIDAD, D.PRECIO, V.FECHA FROM DETALLE AS D INNER JOIN PRODUCTO AS P ON D.ID_PRODUCTO=P.IDPRODUCTO INNER JOIN VENTA AS V ON D.ID_VENTA = V.IDVENTA";
+		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Detalle>(Detalle.class));
 	}
 
 	@Override
